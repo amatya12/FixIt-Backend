@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FixIt_Backend.Dto
+namespace FixIt_Backend.Models
 {
     public class Category
     {
@@ -13,6 +13,7 @@ namespace FixIt_Backend.Dto
         public int Id { get; set; }
 
         [Column(TypeName ="varchar(200)")]
-        public string Categories { get; set; }
+        public string CategoryName { get; set; }
+
     }
 }
