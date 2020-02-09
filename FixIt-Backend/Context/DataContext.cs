@@ -1,4 +1,5 @@
-﻿using FixIt_Backend.Models;
+﻿using FixIt_Backend.Dto;
+using FixIt_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,7 @@ namespace FixIt_Backend.Context
 
         }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Issue> Issues { get; set; }
     }
 }
