@@ -5,15 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FixIt_Backend.Models
+namespace FixIt_Model
 {
-    public class Category
+    public class Feedback
     {
         [Key]
-        public int Id { get; set; }
+        public int Key { get; set; }
 
-        [Column(TypeName ="varchar(200)")]
-        public string CategoryName { get; set; }
-
+        [Column(TypeName = "varchar(2000)")]
+        public string Message { get; set; }
     }
 }

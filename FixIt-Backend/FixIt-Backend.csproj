@@ -15,4 +15,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FixIt-Data\FixIt-Data.csproj" />
+    <ProjectReference Include="..\FixIt-Interface\FixIt-Interface.csproj" />
+    <ProjectReference Include="..\FixIt-Service\FixIt-Service.csproj" />
+  </ItemGroup>
+
 </Project>

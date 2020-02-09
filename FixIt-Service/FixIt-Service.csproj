@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>FixIt_Service</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FixIt-Data\FixIt-Data.csproj" />
+    <ProjectReference Include="..\FixIt-Interface\FixIt-Interface.csproj" />
+  </ItemGroup>
+
+</Project>

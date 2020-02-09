@@ -1,8 +1,7 @@
-﻿using FixIt_Backend.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FixIt_Backend.Dto
+namespace FixIt_Model
 {
     public class Issue
     {
