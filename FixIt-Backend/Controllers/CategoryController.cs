@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using FixIt_Backend.Dto;
 using FixIt_Backend.Extensions;
@@ -17,14 +18,15 @@ namespace FixIt_Backend.Controllers
     {
         private readonly DataContext context;
         private readonly ICrudService<Category> categoryService;
-        private readonly ICustomFilterService filterService;
+        private readonly ICustomFilterService<Category> filterService;
         private readonly IMapper mapper;
 
-        public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService, ICustomFilterService filterService)
+        public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService, ICustomFilterService<Category> filterService)
         {
             this.context = context;
             this.mapper = mapper;
             this.categoryService = categoryService;
+            this.filterService = filterService;
         }
 
         [HttpGet]
@@ -32,7 +34,7 @@ namespace FixIt_Backend.Controllers
         public IActionResult GetCategories()
         {
             var filters = this.GetFilters();
-            var categories = filters.Q != null ? filterService.GetAllByFilterQ(filters.Q) : categoryService.GetAll();
+            var categories = filters.Q != null ? filterService.GetAllByFilterQ(filters.Q) : categoryService.GetAll().AsQueryable();
 
             categories = filters.Id != null ? filterService.GetAllByFilterId(categories,filters.Id) : categories;
 

@@ -8,11 +8,11 @@ namespace FixIt_Interface
 {
     public interface ICustomFilterService<T>
     {
-        IQueryable<Category> GetAllByFilterQ(string Q);
+        IQueryable<T> GetAllByFilterQ(string Q);
 
-        IQueryable<Category> GetAllByFilterId(IQueryable<T> source, List<int> id);
+        IQueryable<T> GetAllByFilterId(IQueryable<T> source, List<int> id);
 
-        IQueryable<Category> GetAllByFilterReferenceId(IQueryable<T> source, int referenceId);
+        IQueryable<T> GetAllByFilterReferenceId(IQueryable<T> source, int referenceId);
         
     }
 }
