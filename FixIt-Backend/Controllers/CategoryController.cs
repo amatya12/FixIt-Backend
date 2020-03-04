@@ -41,8 +41,10 @@ namespace FixIt_Backend.Controllers
             categories = filters.CustomFilters.Count > 0 && filters.CustomFilters != null
                          ? filterService.GetAllByFilterReferenceId(categories, filters.ReferenceId)
                          : categories;
-
+            var totalElems = categories.Count();
+            categories = categories.Skip(filters.BeginIndex).Take(filters.Limit);
             var categoryDto = mapper.Map<IEnumerable<CategoryDto>>(categories);
+            HttpContext.Response.Headers.Add("Content-Range", $"categories {filters.BeginIndex} - {categoryDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<CategoryDto>>(categoryDto));
         }
 

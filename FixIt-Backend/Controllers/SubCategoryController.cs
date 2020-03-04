@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using FixIt_Backend.Dto;
+using FixIt_Backend.Extensions;
 using FixIt_Backend.Helpers;
 using FixIt_Data.Context;
 using FixIt_Dto.Dto;
@@ -17,26 +19,39 @@ namespace FixIt_Backend.Controllers
         private readonly DataContext context;
         private readonly ICrudService<SubCategories> subCategoryService;
         private readonly IMapper mapper;
+        private readonly ICustomFilterService<SubCategories> filterService;
 
-        public SubCategoryController(DataContext context, IMapper mapper, ICrudService<SubCategories> subCategoryService)
+        public SubCategoryController(DataContext context, IMapper mapper, ICrudService<SubCategories> subCategoryService,ICustomFilterService<SubCategories> filterService)
         {
             this.context = context;
             this.mapper = mapper;
             this.subCategoryService = subCategoryService;
+            this.filterService = filterService;
         }
 
         [HttpGet]
         [Route("/api/subcategories")]
-        public IActionResult GetCategories()
+        public IActionResult GetSubCategories()
         {
-            var subCategoriesFromRepo = subCategoryService.GetAll();
-            var subCategoryDto = mapper.Map<IEnumerable<SubCategoriesDto>>(subCategoriesFromRepo);
+            var filters = this.GetFilters();
+            var subCategories = filters.Q != null ? filterService.GetAllByFilterQ(filters.Q) : subCategoryService.GetAll().AsQueryable();
+
+            subCategories = filters.Id != null ? filterService.GetAllByFilterId(subCategories, filters.Id) : subCategories;
+
+            subCategories = filters.CustomFilters.Count > 0 && filters.CustomFilters != null
+                         ? filterService.GetAllByFilterReferenceId(subCategories, filters.ReferenceId)
+                         : subCategories;
+            var totalElems = subCategories.Count();
+            subCategories = subCategories.Skip(filters.BeginIndex).Take(filters.Limit);
+
+            var subCategoryDto = mapper.Map<IEnumerable<SubCategoriesDto>>(subCategories);
+            HttpContext.Response.Headers.Add("Content-Range", $"subcategories {filters.BeginIndex} - {subCategoryDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<SubCategoriesDto>>(subCategoryDto));
         }
 
         [HttpPost]
         [Route("/api/subcategories")]
-        public IActionResult CreateCategory([FromBody] SubCategoriesDto subCategoryDto)
+        public IActionResult CreateSubCategory([FromBody] SubCategoriesDto subCategoryDto)
         {
             var subCategoryEntity = mapper.Map<SubCategories>(subCategoryDto);
             subCategoryService.Save(subCategoryEntity);
@@ -56,7 +71,7 @@ namespace FixIt_Backend.Controllers
 
         [Route("/api/subcategories")]
         [HttpPut]
-        public IActionResult EditCategory([FromBody] SubCategoriesDto category)
+        public IActionResult EditSubCategory([FromBody] SubCategoriesDto category)
         {
             var categoryEntity = mapper.Map<SubCategories>(category);
             subCategoryService.Save(categoryEntity);
