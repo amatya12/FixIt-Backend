@@ -33,7 +33,14 @@ namespace FixIt_Backend.Controllers
             var subCategoryDto = mapper.Map<IEnumerable<SubCategoriesDto>>(subCategoriesFromRepo);
             return Ok(new DtoOutput<IEnumerable<SubCategoriesDto>>(subCategoryDto));
         }
-
+        [Route("/api/subcategories/{id}")]
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            var categoryFromRepo = subCategoryService.GetById(id);
+            var outputDto = mapper.Map<SubCategoriesDto>(categoryFromRepo);
+            return Ok(new DtoOutput<SubCategoriesDto>(outputDto));
+        }
         [HttpPost]
         [Route("/api/subcategories")]
         public IActionResult CreateCategory([FromBody] SubCategoriesDto subCategoryDto)
