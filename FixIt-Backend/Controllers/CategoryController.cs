@@ -4,6 +4,7 @@ using AutoMapper;
 using FixIt_Backend.Dto;
 using FixIt_Backend.Helpers;
 using FixIt_Data.Context;
+using FixIt_Dto.Dto;
 using FixIt_Interface;
 using FixIt_Model;
 using Microsoft.AspNetCore.Mvc;
@@ -35,15 +36,15 @@ namespace FixIt_Backend.Controllers
 
         [HttpPost]
         [Route("/api/category")]
-        public IActionResult CreateCategory([FromBody] CategoryDto categoryDto)
+        public IActionResult CreateCategory([FromBody] CategoryForCreateDto categoryDto)
         {
             var categoryEntity = mapper.Map<Category>(categoryDto);
             categoryService.Save(categoryEntity);
             try
             {
                 context.SaveChanges();
-                var outputDto = mapper.Map<CategoryDto>(categoryEntity);
-                return Ok(new DtoOutput<CategoryDto>(outputDto));
+                var outputDto = mapper.Map<CategoryForCreateDto>(categoryEntity);
+                return Ok(new DtoOutput<CategoryForCreateDto>(outputDto));
             }
             catch(Exception ex)
             {

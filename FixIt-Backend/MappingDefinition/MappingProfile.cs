@@ -13,6 +13,9 @@ namespace FixIt_Backend.MappingDefinition
             CreateMap<CategoryDto, Category>();
             CreateMap<Category, CategoryDto>();
 
+            CreateMap<CategoryForCreateDto, Category>();
+            CreateMap<Category, CategoryForCreateDto>();
+
             CreateMap<SubCategories, SubCategoriesDto>();
             CreateMap<SubCategoriesDto, SubCategories>();
 
