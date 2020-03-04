@@ -56,7 +56,7 @@ namespace FixIt_Backend.Controllers
 
         [Route("/api/category")]
         [HttpPut]
-        public IActionResult EditCategory([FromBody] CategoryDto category)
+        public IActionResult EditCategory([FromBody] CategoryForCreateDto category)
         {
             var categoryEntity = mapper.Map<Category>(category);
             categoryService.Save(categoryEntity);
@@ -69,7 +69,7 @@ namespace FixIt_Backend.Controllers
             }
             catch(Exception)
             {
-                return BadRequest(new DtoOutput<CategoryDto>(category, "Unable to edit Category", ErrorCode.CATEGORY_EDIT_FAILED));
+                return BadRequest(new DtoOutput<CategoryForCreateDto>(category, "Unable to edit Category", ErrorCode.CATEGORY_EDIT_FAILED));
             }
 
         }
