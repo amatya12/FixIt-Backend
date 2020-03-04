@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<<<< Temporary merge branch 1
-using System.Threading.Tasks;
-=========
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FixIt_Backend.Dto;
 using FixIt_Backend.Extensions;
@@ -25,10 +21,6 @@ namespace FixIt_Backend.Controllers
         private readonly ICrudService<Category> categoryService;
         private readonly ICustomFilterService<Category> filterService;
         private readonly IMapper mapper;
-<<<<<<<<< Temporary merge branch 1
-       
-        public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService)
-=========
 
         public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService, ICustomFilterService<Category> filterService)
         {
