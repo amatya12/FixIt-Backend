@@ -15,5 +15,7 @@ namespace FixIt_Model
         [Column(TypeName ="varchar(200)")]
         public string CategoryName { get; set; }
 
+        public virtual List<SubCategories> SubCategories { get; set; }
+
     }
 }
