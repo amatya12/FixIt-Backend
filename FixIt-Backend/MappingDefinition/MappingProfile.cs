@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FixIt_Backend.Dto;
+using FixIt_Dto.Dto;
 using FixIt_Model;
 using FixIt_Model.Users;
 
@@ -11,6 +12,9 @@ namespace FixIt_Backend.MappingDefinition
         {
             CreateMap<CategoryDto, Category>();
             CreateMap<Category, CategoryDto>();
+
+            CreateMap<SubCategories, SubCategoriesDto>();
+            CreateMap<SubCategoriesDto, SubCategories>();
 
             CreateMap<IssueDto, Issue>();
             CreateMap<Issue, IssueDto>();
