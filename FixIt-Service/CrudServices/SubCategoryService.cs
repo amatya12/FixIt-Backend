@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FixIt_Service.CrudServices
 {
-    public class SubCategoryService : ICrudService<SubCategories>
+    public class SubCategoryService : ICrudService<SubCategories>, ICustomFilterService<SubCategories>
     {
         private readonly DataContext context;
         public SubCategoryService(DataContext context)
@@ -52,6 +52,21 @@ namespace FixIt_Service.CrudServices
         public void Update(SubCategories model)
         {
             context.SubCategories.Update(model);
+        }
+
+        public IQueryable<SubCategories> GetAllByFilterId(IQueryable<SubCategories> source, List<int> id)
+        {
+            return source.Where(x => id.Contains(x.Id));
+        }
+
+        public IQueryable<SubCategories> GetAllByFilterQ(string Q)
+        {
+            return context.SubCategories.Where(x => x.SubCategoryName.Contains(Q));
+        }
+
+        public IQueryable<SubCategories> GetAllByFilterReferenceId(IQueryable<SubCategories> source, int referenceId)
+        {
+            return source.Where(x => x.Id == referenceId);
         }
     }
 }

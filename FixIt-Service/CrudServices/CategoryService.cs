@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace FixIt_Service.CrudServices
 {
-    public class CategoryService : ICrudService<Category>
+    public class CategoryService : ICrudService<Category>, ICustomFilterService<Category>
     {
         private readonly DataContext context;
         public CategoryService(DataContext context)
@@ -42,6 +42,19 @@ namespace FixIt_Service.CrudServices
         }
 
         public void Update(Category model) => context.Categories.Update(model);
-        
+
+        public IQueryable<Category> GetAllByFilterQ(string Q)
+        {
+           return context.Categories.Where(x => x.CategoryName.Contains(Q));
+        }
+        public IQueryable<Category> GetAllByFilterId(IQueryable<Category> category,List<int> id)
+        {
+            return category.Where(x => id.Contains(x.Id));
+        }
+
+        public IQueryable<Category> GetAllByFilterReferenceId(IQueryable<Category> category, int referenceId)
+        {
+            return category.Where(x => x.Id == referenceId);
+        }
     }
 }

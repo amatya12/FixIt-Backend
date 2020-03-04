@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FixIt_Backend.Dto;
+using FixIt_Backend.Extensions;
 using FixIt_Backend.Helpers;
 using FixIt_Data.Context;
 using FixIt_Dto.Dto;
@@ -18,22 +20,33 @@ namespace FixIt_Backend.Controllers
     {
         private readonly DataContext context;
         private readonly ICrudService<Category> categoryService;
+        private readonly ICustomFilterService<Category> filterService;
         private readonly IMapper mapper;
-       
-        public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService)
+
+        public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService, ICustomFilterService<Category> filterService)
         {
             this.context = context;
             this.mapper = mapper;
             this.categoryService = categoryService;
-           
+            this.filterService = filterService;
         }
 
         [HttpGet]
         [Route("/api/category")]
         public IActionResult GetCategories()
         {
-            var categoriesFromRepo = categoryService.GetAll();
-            var categoryDto = mapper.Map<IEnumerable<CategoryDto>>(categoriesFromRepo);
+            var filters = this.GetFilters();
+            var categories = filters.Q != null ? filterService.GetAllByFilterQ(filters.Q) : categoryService.GetAll().AsQueryable();
+
+            categories = filters.Id != null ? filterService.GetAllByFilterId(categories,filters.Id) : categories;
+
+            categories = filters.CustomFilters.Count > 0 && filters.CustomFilters != null
+                         ? filterService.GetAllByFilterReferenceId(categories, filters.ReferenceId)
+                         : categories;
+            var totalElems = categories.Count();
+            categories = categories.Skip(filters.BeginIndex).Take(filters.Limit);
+            var categoryDto = mapper.Map<IEnumerable<CategoryDto>>(categories);
+            HttpContext.Response.Headers.Add("Content-Range", $"categories {filters.BeginIndex} - {categoryDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<CategoryDto>>(categoryDto));
         }
 
