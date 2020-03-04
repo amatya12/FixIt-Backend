@@ -1,6 +1,7 @@
 ﻿using FixIt_Data.Context;
 using FixIt_Interface;
 using FixIt_Model;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,10 +23,10 @@ namespace FixIt_Service.CrudServices
         public bool Exists(Category model) => GetById(model.Id) != null;
 
 
-        public IEnumerable<Category> GetAll() => context.Categories;
+        public IEnumerable<Category> GetAll() => context.Categories.Include(x => x.SubCategories);
 
 
-        public Category GetById(int id) => context.Categories.FirstOrDefault(x => x.Id == id);
+        public Category GetById(int id) => context.Categories.Include(x => x.SubCategories).FirstOrDefault(x => x.Id == id);
         
 
         public void Save(Category model)
