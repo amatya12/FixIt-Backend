@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 using AutoMapper;
 using FixIt_Backend.Dto;
@@ -10,6 +11,7 @@ using FixIt_Dto.Dto;
 using FixIt_Interface;
 using FixIt_Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace FixIt_Backend.Controllers
 {
@@ -20,6 +22,8 @@ namespace FixIt_Backend.Controllers
         private readonly ICrudService<Category> categoryService;
         private readonly ICustomFilterService<Category> filterService;
         private readonly IMapper mapper;
+       
+        public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService)
 
         public CategoryController(DataContext context, IMapper mapper, ICrudService<Category> categoryService, ICustomFilterService<Category> filterService)
         {
@@ -66,6 +70,16 @@ namespace FixIt_Backend.Controllers
                 return BadRequest(new DtoOutput<CategoryDto>(null, message, ErrorCode.CATEGORY_CREATE_FAILED));
             }
             
+        }
+
+
+        [Route("/api/category/{id}")]
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            var categoryFromRepo = categoryService.GetById(id);
+            var outputDto = mapper.Map<CategoryDto>(categoryFromRepo);
+            return Ok(new DtoOutput<CategoryDto>(outputDto));
         }
 
         [Route("/api/category")]

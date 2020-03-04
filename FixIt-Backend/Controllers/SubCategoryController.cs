@@ -48,7 +48,14 @@ namespace FixIt_Backend.Controllers
             HttpContext.Response.Headers.Add("Content-Range", $"subcategories {filters.BeginIndex} - {subCategoryDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<SubCategoriesDto>>(subCategoryDto));
         }
-
+        [Route("/api/subcategories/{id}")]
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            var categoryFromRepo = subCategoryService.GetById(id);
+            var outputDto = mapper.Map<SubCategoriesDto>(categoryFromRepo);
+            return Ok(new DtoOutput<SubCategoriesDto>(outputDto));
+        }
         [HttpPost]
         [Route("/api/subcategories")]
         public IActionResult CreateSubCategory([FromBody] SubCategoriesDto subCategoryDto)
