@@ -5,4 +5,13 @@
     <RootNamespace>FixIt_Interface</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FixIt-Dto\FixIt-Dto.csproj" />
+    <ProjectReference Include="..\FixIt-Model\FixIt-Model.csproj" />
+  </ItemGroup>
+
 </Project>

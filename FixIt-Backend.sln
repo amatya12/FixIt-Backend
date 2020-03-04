@@ -5,13 +5,15 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixIt-Backend", "FixIt-Backend\FixIt-Backend.csproj", "{6DD6330B-005A-4975-B4F3-F81349A6BC42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixIt-Interface", "FixIt-Interface\FixIt-Interface.csproj", "{32E83993-5CB7-44CA-ACCC-C541542A92E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixIt-Interface", "FixIt-Interface\FixIt-Interface.csproj", "{32E83993-5CB7-44CA-ACCC-C541542A92E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixIt-Service", "FixIt-Service\FixIt-Service.csproj", "{53086B8F-827C-45FF-B3DF-5B93B6269494}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixIt-Service", "FixIt-Service\FixIt-Service.csproj", "{53086B8F-827C-45FF-B3DF-5B93B6269494}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixIt-Data", "FixIt-Data\FixIt-Data.csproj", "{10F5CC78-6B84-4CA0-AB1A-8B8BD8839F4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixIt-Data", "FixIt-Data\FixIt-Data.csproj", "{10F5CC78-6B84-4CA0-AB1A-8B8BD8839F4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixIt-Model", "FixIt-Model\FixIt-Model.csproj", "{B6C661C3-5E64-4FE0-87EB-6FEFAB3A3F25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixIt-Model", "FixIt-Model\FixIt-Model.csproj", "{B6C661C3-5E64-4FE0-87EB-6FEFAB3A3F25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixIt-Dto", "FixIt-Dto\FixIt-Dto.csproj", "{1D73C0D9-6C98-430E-9FEC-73E7C5BAEEDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B6C661C3-5E64-4FE0-87EB-6FEFAB3A3F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6C661C3-5E64-4FE0-87EB-6FEFAB3A3F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6C661C3-5E64-4FE0-87EB-6FEFAB3A3F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D73C0D9-6C98-430E-9FEC-73E7C5BAEEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D73C0D9-6C98-430E-9FEC-73E7C5BAEEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D73C0D9-6C98-430E-9FEC-73E7C5BAEEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D73C0D9-6C98-430E-9FEC-73E7C5BAEEDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
