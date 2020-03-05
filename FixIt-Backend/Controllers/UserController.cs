@@ -83,8 +83,10 @@ namespace FixIt_Backend.Controllers
 
             userWithRoles = filters.CustomFilters.Count > 0 && filters.CustomFilters != null ? userWithRoles.Where(f => f.Role.Any(x => x.Id == filters.ReferenceId)) : userWithRoles;
 
+            var totalElems = userWithRoles.Count();
 
-            HttpContext.Response.Headers.Add("Content-Range", $"users {1}-{10}/{10}");
+            userWithRoles = userWithRoles.Skip(filters.BeginIndex).Take(filters.Limit);
+            HttpContext.Response.Headers.Add("Content-Range", $"users {filters.BeginIndex} - {userWithRoles.Count() - 1}/{totalElems}");
 
             return Ok(new DtoOutput<IEnumerable<User_In_Role_Dto>>(userWithRoles,"List of Users",0));
         }

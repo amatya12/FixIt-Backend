@@ -39,9 +39,9 @@ namespace FixIt_Backend.Controllers
 
             categories = filters.Id != null ? filterService.GetAllByFilterId(categories,filters.Id) : categories;
 
-            categories = filters.CustomFilters.Count > 0 && filters.CustomFilters != null
-                         ? filterService.GetAllByFilterReferenceId(categories, filters.ReferenceId)
-                         : categories;
+            //categories = filters.CustomFilters.Count > 0 && filters.CustomFilters != null
+            //             ? filterService.GetAllByFilterReferenceId(categories, filters.ReferenceId)
+            //             : categories;
             var totalElems = categories.Count();
             categories = categories.Skip(filters.BeginIndex).Take(filters.Limit);
             var categoryDto = mapper.Map<IEnumerable<CategoryDto>>(categories);
@@ -79,10 +79,11 @@ namespace FixIt_Backend.Controllers
             return Ok(new DtoOutput<CategoryDto>(outputDto));
         }
 
-        [Route("/api/category")]
+        [Route("/api/category/{id}")]
         [HttpPut]
-        public IActionResult EditCategory([FromBody] CategoryForCreateDto category)
+        public IActionResult EditCategory( int id, [FromBody] CategoryForCreateDto category)
         {
+            category.Id = id;
             var categoryEntity = mapper.Map<Category>(category);
             categoryService.Save(categoryEntity);
             try
@@ -99,5 +100,15 @@ namespace FixIt_Backend.Controllers
 
         }
 
+        
+        [HttpDelete]
+        [Route("/api/Category/{id}")]
+        public IActionResult DeleteCategory(int id)
+        {
+            categoryService.DeleteById(id);
+            context.SaveChanges();
+            return Ok(new DtoOutput<int>(0));
+
+        }
     }
 }

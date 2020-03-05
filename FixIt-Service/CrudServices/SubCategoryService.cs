@@ -66,7 +66,7 @@ namespace FixIt_Service.CrudServices
 
         public IQueryable<SubCategories> GetAllByFilterReferenceId(IQueryable<SubCategories> source, int referenceId)
         {
-            return source.Where(x => x.Id == referenceId);
+            return source.Where(x => x.CategoryId == referenceId);
         }
     }
 }

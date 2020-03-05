@@ -45,7 +45,7 @@ namespace FixIt_Service.CrudServices
 
         public IQueryable<Category> GetAllByFilterQ(string Q)
         {
-           return context.Categories.Where(x => x.CategoryName.Contains(Q));
+           return context.Categories.Include(x => x.SubCategories).Where(x => x.CategoryName.Contains(Q));
         }
         public IQueryable<Category> GetAllByFilterId(IQueryable<Category> category,List<int> id)
         {

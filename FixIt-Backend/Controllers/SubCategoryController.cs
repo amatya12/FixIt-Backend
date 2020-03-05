@@ -30,7 +30,7 @@ namespace FixIt_Backend.Controllers
         }
 
         [HttpGet]
-        [Route("/api/subcategories")]
+        [Route("/api/subcategory")]
         public IActionResult GetSubCategories()
         {
             var filters = this.GetFilters();
@@ -48,7 +48,7 @@ namespace FixIt_Backend.Controllers
             HttpContext.Response.Headers.Add("Content-Range", $"subcategories {filters.BeginIndex} - {subCategoryDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<SubCategoriesDto>>(subCategoryDto));
         }
-        [Route("/api/subcategories/{id}")]
+        [Route("/api/subcategory/{id}")]
         [HttpGet]
         public IActionResult Get(int id)
         {
@@ -57,7 +57,7 @@ namespace FixIt_Backend.Controllers
             return Ok(new DtoOutput<SubCategoriesDto>(outputDto));
         }
         [HttpPost]
-        [Route("/api/subcategories")]
+        [Route("/api/subcategory")]
         public IActionResult CreateSubCategory([FromBody] SubCategoriesDto subCategoryDto)
         {
             var subCategoryEntity = mapper.Map<SubCategories>(subCategoryDto);
@@ -76,10 +76,11 @@ namespace FixIt_Backend.Controllers
 
         }
 
-        [Route("/api/subcategories")]
+        [Route("/api/subcategory/{id}")]
         [HttpPut]
-        public IActionResult EditSubCategory([FromBody] SubCategoriesDto category)
+        public IActionResult EditSubCategory(int id, [FromBody] SubCategoriesDto category)
         {
+            category.Id = id;
             var categoryEntity = mapper.Map<SubCategories>(category);
             subCategoryService.Save(categoryEntity);
             try
@@ -94,6 +95,15 @@ namespace FixIt_Backend.Controllers
                 return BadRequest(new DtoOutput<SubCategoriesDto>(category, "Unable to edit Category", ErrorCode.SUBCATEGORY_EDIT_FAILED));
             }
 
+        }
+
+        [Route("/api/SubCategory/{id}")]
+        [HttpDelete]
+        public IActionResult DeleteSubCategory(int id)
+        {
+            subCategoryService.DeleteById(id);
+            context.SaveChanges();
+            return Ok(new DtoOutput<int>(0));
         }
 
     }
