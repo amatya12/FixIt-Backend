@@ -15,5 +15,9 @@ namespace FixIt_Backend.Helpers
 
         public const int SUBCATEGORY_CREATE_FAILED = 104;
         public const int SUBCATEGORY_EDIT_FAILED = 105;
+
+        public const int DEPARTMENT_EDIT_FAILED = 106;
+        public const int DEPARTMENT_CREATE_FAILED = 107;
+
     }
 }

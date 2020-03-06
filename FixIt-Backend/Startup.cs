@@ -116,9 +116,13 @@ namespace FixIt_Backend
             services.AddScoped<ICrudService<Category>, CategoryService>();
             services.AddScoped<ICrudService<Issue>, IssueService>();
             services.AddScoped<ICrudService<SubCategories>, SubCategoryService>();
+            services.AddScoped<ICrudService<Department>, DepartmentService>();
+
             services.AddScoped<IAuthenticateService, AuthenticateService>();
             services.AddScoped<ICustomFilterService<Category>, CategoryService>();
             services.AddScoped<ICustomFilterService<SubCategories>, SubCategoryService>();
+            services.AddScoped<ICustomFilterService<Department>, DepartmentService>();
+
             services.AddIdentity<User,Role>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();

@@ -25,6 +25,10 @@ namespace FixIt_Backend.MappingDefinition
             CreateMap<RoleDto, Role>().ForMember(x => x.NormalizedName, opt => opt.MapFrom(dto => dto.Name.ToUpperInvariant()));
             CreateMap<Role, RoleDto>();
 
+            CreateMap<DepartmentDto, Department>();
+            CreateMap<Department, DepartmentDto>();
+
+
         }
     }
 }
