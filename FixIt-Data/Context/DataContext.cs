@@ -64,6 +64,7 @@ namespace FixIt_Data.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Issue> Issues { get; set; }
         public DbSet<SubCategories> SubCategories { get; set; }
+        public DbSet<Department> Departments { get; set; }
         //public DbSet<ApplicationUser> Users { get; set; }
         //public DbSet<ApplicationRole> Roles { get; set; }
         //public DbSet<ApplicationUserRole> UserRoles { get;set }
