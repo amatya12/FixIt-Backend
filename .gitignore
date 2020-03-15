@@ -262,6 +262,7 @@ __pycache__/
 
 log.txt
 appsettings.Development.json
+launchSettings.json
 
 build/
 !scripts/build/
