@@ -32,7 +32,7 @@ namespace FixIt_Backend.Controllers
             this.filterService = filterService;
         }
 
-        [Route("/api/issues")]
+        [Route("/api/issue")]
         [HttpGet]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         public IActionResult GetAllIssues()
@@ -50,7 +50,7 @@ namespace FixIt_Backend.Controllers
             var totalElems = issues.Count();
             issues = issues.Skip(filters.BeginIndex).Take(filters.Limit);
             var issueDto = mapper.Map<IEnumerable<IssueDto>>(issues);
-            HttpContext.Response.Headers.Add("Content-Range", $"issues {filters.BeginIndex} - {issueDto.Count() - 1}/ {totalElems}");
+            HttpContext.Response.Headers.Add("Content-Range", $"issue {filters.BeginIndex} - {issueDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<IssueDto>>(issueDto));
         }
 

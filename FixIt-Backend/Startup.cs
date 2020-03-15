@@ -158,10 +158,11 @@ namespace FixIt_Backend
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
+                       .WithExposedHeaders(new[] { "Content-Range" })
                        .AllowCredentials()
                        .AllowAnyHeader();
             });
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
