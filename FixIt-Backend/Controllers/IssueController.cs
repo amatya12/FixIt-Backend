@@ -62,6 +62,19 @@ namespace FixIt_Backend.Controllers
         {
 
             var issueEntity = mapper.Map<Issue>(model);
+            //var issueModel = new Issue
+            //{
+            //    Id = model.Id,
+            //    CategoryId = model.CategoryId,
+            //    ImageUrl = model.ImageUrl,
+            //    Issues = model.Issues,
+            //    latitude = model.latitude,
+            //    longitude = model.longitude,
+            //    Location = model.Location,
+            //    Priority = model.Priority,
+            //    Status = "pending",
+            //    DateCreated = DateTime.Now.ToString(),
+            //};
             issueService.Save(issueEntity);
             try
             {

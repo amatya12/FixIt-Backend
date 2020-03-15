@@ -7,6 +7,8 @@ namespace FixIt_Backend.Dto
 {
     public class IssueDto
     {
+        public int Id { get; set; }
+
         public string Issues { get; set; }
 
         public int CategoryId { get; set; }
@@ -21,7 +23,7 @@ namespace FixIt_Backend.Dto
 
         public double longitude { get; set; }
 
-        public string status { get; set; }
+        public string Status { get; set; }
 
         public string DateCreated { get; set; }
        

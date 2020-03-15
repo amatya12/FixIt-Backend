@@ -25,7 +25,7 @@ namespace FixIt_Model
 
         public double longitude { get; set; }
 
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
         public string DateCreated { get; set; }
 

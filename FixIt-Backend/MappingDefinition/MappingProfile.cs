@@ -3,6 +3,7 @@ using FixIt_Backend.Dto;
 using FixIt_Dto.Dto;
 using FixIt_Model;
 using FixIt_Model.Users;
+using System;
 
 namespace FixIt_Backend.MappingDefinition
 {
@@ -19,7 +20,8 @@ namespace FixIt_Backend.MappingDefinition
             CreateMap<SubCategories, SubCategoriesDto>();
             CreateMap<SubCategoriesDto, SubCategories>();
 
-            CreateMap<IssueDto, Issue>();
+            CreateMap<IssueDto, Issue>().ForMember(x => x.Status, opt => opt.MapFrom(d => "pending"))
+                                        .ForMember(x => x.DateCreated, opt => opt.MapFrom(d => DateTime.Now.ToString()));
             CreateMap<Issue, IssueDto>();
 
             CreateMap<RoleDto, Role>().ForMember(x => x.NormalizedName, opt => opt.MapFrom(dto => dto.Name.ToUpperInvariant()));
