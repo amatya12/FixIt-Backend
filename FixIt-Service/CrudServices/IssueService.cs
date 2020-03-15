@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FixIt_Service.CrudServices
 {
-    public class IssueService : ICrudService<Issue>
+    public class IssueService : ICrudService<Issue>, ICustomFilterService<Issue>
     {
         private readonly DataContext context;
         public IssueService(DataContext context)
@@ -41,6 +41,21 @@ namespace FixIt_Service.CrudServices
         }
 
         public void Update(Issue model) => context.Issues.Update(model);
-        
+
+        public IQueryable<Issue> GetAllByFilterId(IQueryable<Issue> source, List<int> id)
+        {
+            return source.Where(x => id.Contains(x.Id));
+        }
+
+        public IQueryable<Issue> GetAllByFilterQ(string Q)
+        {
+           return context.Issues.Include(c => c.Category).Where(x => x.Issues.Contains(Q));
+        }
+
+        public IQueryable<Issue> GetAllByFilterReferenceId(IQueryable<Issue> source, int referenceId)
+        {
+            return source.Where(x => x.CategoryId == referenceId);
+        }
+
     }
 }
