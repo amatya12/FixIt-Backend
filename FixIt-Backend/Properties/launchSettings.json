@@ -20,7 +20,7 @@
     "FixIt_Backend": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swaggeraa",
+      "launchUrl": "swagger",
       "applicationUrl": "https://192.168.1.249:5000;http://192.168.1.249:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
