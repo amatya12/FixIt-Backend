@@ -34,7 +34,7 @@ namespace FixIt_Backend.Controllers
 
         [Route("/api/issues")]
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         public IActionResult GetAllIssues()
         {
             var filters = this.GetFilters();
