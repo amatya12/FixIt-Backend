@@ -27,6 +27,8 @@ namespace FixIt_Model
 
         public bool Status { get; set; }
 
+        public string DateCreated { get; set; }
+
         
 
     }

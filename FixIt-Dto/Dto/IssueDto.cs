@@ -7,22 +7,23 @@ namespace FixIt_Backend.Dto
 {
     public class IssueDto
     {
-        public string Title { get; set; }
+        public string Issues { get; set; }
 
-        public string Description { get; set; }
+        public int CategoryId { get; set; }
+
+        public string Priority { get; set; }
 
         public string ImageUrl { get; set; }
+        
+        public string Location { get; set; }
 
         public double latitude { get; set; }
 
         public double longitude { get; set; }
 
-        public string Severity { get; set; }
+        public string status { get; set; }
 
-        public string ExtraInformation { get; set; }
-
-        public bool status { get; set; }
-
-        public int  CategoryId { get; set; }
+        public string DateCreated { get; set; }
+       
     }
 }
