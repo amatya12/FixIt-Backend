@@ -7,6 +7,7 @@ using FixIt_Backend.Dto;
 using FixIt_Backend.Extensions;
 using FixIt_Backend.Helpers;
 using FixIt_Data.Context;
+using FixIt_Dto.Dto;
 using FixIt_Interface;
 using FixIt_Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -49,32 +50,28 @@ namespace FixIt_Backend.Controllers
 
             var totalElems = issues.Count();
             issues = issues.Skip(filters.BeginIndex).Take(filters.Limit);
-            var issueDto = mapper.Map<IEnumerable<IssueDto>>(issues);
+            var issueDto = mapper.Map<IEnumerable<IssueForListDto>>(issues);
             HttpContext.Response.Headers.Add("Content-Range", $"issue {filters.BeginIndex} - {issueDto.Count() - 1}/ {totalElems}");
-            return Ok(new DtoOutput<IEnumerable<IssueDto>>(issueDto));
+            return Ok(new DtoOutput<IEnumerable<IssueForListDto>>(issueDto));
         }
 
+        [HttpGet]
+        [Route("/api/issue/{id}")]
+        public IActionResult GetIssue(int id)
+        {
+            var issue =  issueService.GetById(id);
+            var issueDto = mapper.Map<IssueDto>(issue);
+            return Ok(new DtoOutput<IssueDto>(issueDto));
+        }
 
 
         [HttpPost]
         [Route("/api/issue")]
-        public IActionResult CreateIssue([FromBody]IssueDto model)
+        public IActionResult CreateIssue([FromBody]IssueForCreateDto model)
         {
 
             var issueEntity = mapper.Map<Issue>(model);
-            //var issueModel = new Issue
-            //{
-            //    Id = model.Id,
-            //    CategoryId = model.CategoryId,
-            //    ImageUrl = model.ImageUrl,
-            //    Issues = model.Issues,
-            //    latitude = model.latitude,
-            //    longitude = model.longitude,
-            //    Location = model.Location,
-            //    Priority = model.Priority,
-            //    Status = "pending",
-            //    DateCreated = DateTime.Now.ToString(),
-            //};
+           
             issueService.Save(issueEntity);
             try
             {
@@ -83,8 +80,47 @@ namespace FixIt_Backend.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest(new DtoOutput<IssueDto>(model, "Unable to create issue.", ErrorCode.ISSUE_EDIT_FAILED));
+                return BadRequest(new DtoOutput<IssueForCreateDto>(model, "Unable to create issue.", ErrorCode.ISSUE_CREATE_FAILED));
             }
         }
+
+        [HttpPut]
+        [Route("/api/issue/{id}")]
+        public IActionResult EditIssue(int id , [FromBody]IssueForEditDto issue)
+        {
+            issue.Id = id;
+            var issueEntity = mapper.Map<Issue>(issue);
+
+            issueService.Save(issueEntity);
+            try
+            {
+                context.SaveChanges();
+                return Ok(new DtoOutput<IssueForEditDto>(issue, "issue edited successfully", 0));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new DtoOutput<IssueForEditDto>(issue, " Unable to edit issue.", ErrorCode.ISSUE_EDIT_FAILED));
+            }
+        }
+
+        [HttpDelete]
+        [Route("/api/issue/{id}")]
+        public IActionResult DeleteIssue(int id)
+        {
+            issueService.DeleteById(id);
+            try
+            {
+                context.SaveChanges();
+                return Ok(new DtoOutput<int>(0, "Deleted successfully", 0));
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new DtoOutput<int>(0, "Cannot delete the issue", ErrorCode.ISSUE_DELETE_FAILED));
+            }
+
+        }
+
+
     }
 }

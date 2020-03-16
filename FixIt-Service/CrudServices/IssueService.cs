@@ -19,14 +19,19 @@ namespace FixIt_Service.CrudServices
         public void Create(Issue model) => context.Issues.Add(model);
 
 
-        public void DeleteById(int id) => context.Issues.Remove(GetById(id));
+        public void DeleteById(int id)
+        {
+            var issue = GetById(id);
+            issue.IsDeleted = true;
+            context.SaveChanges();
+        }
 
         public bool Exists(Issue model) => GetById(model.Id) != null;
 
 
-        public IEnumerable<Issue> GetAll() => context.Issues.Include(c => c.Category);
+        public IEnumerable<Issue> GetAll() => context.Issues.Include(c => c.Category).Where(x => x.IsDeleted == false);
 
-        public Issue GetById(int id) => context.Issues.FirstOrDefault(i => i.Id == id);
+        public Issue GetById(int id) => context.Issues.Include(x => x.Category).FirstOrDefault(i => i.Id == id);
 
         public void Save(Issue model)
         {

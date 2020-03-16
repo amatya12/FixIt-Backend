@@ -21,13 +21,15 @@ namespace FixIt_Model
 
         public string Location { get; set; }
 
-        public double latitude { get; set; }
+        public double Latitude { get; set; }
 
-        public double longitude { get; set; }
+        public double Longitude { get; set; }
 
         public string Status { get; set; }
 
         public string DateCreated { get; set; }
+
+        public bool IsDeleted { get; set; }
 
         
 

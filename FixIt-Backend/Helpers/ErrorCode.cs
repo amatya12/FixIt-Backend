@@ -12,12 +12,13 @@ namespace FixIt_Backend.Helpers
 
         public const int ISSUE_CREATE_FAILED = 102;
         public const int ISSUE_EDIT_FAILED = 103;
+        public const int ISSUE_DELETE_FAILED = 104;
 
-        public const int SUBCATEGORY_CREATE_FAILED = 104;
-        public const int SUBCATEGORY_EDIT_FAILED = 105;
+        public const int SUBCATEGORY_CREATE_FAILED = 105;
+        public const int SUBCATEGORY_EDIT_FAILED = 106;
 
-        public const int DEPARTMENT_EDIT_FAILED = 106;
-        public const int DEPARTMENT_CREATE_FAILED = 107;
+        public const int DEPARTMENT_EDIT_FAILED = 107;
+        public const int DEPARTMENT_CREATE_FAILED = 108;
 
     }
 }

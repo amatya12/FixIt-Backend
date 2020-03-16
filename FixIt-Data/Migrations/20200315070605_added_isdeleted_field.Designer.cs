@@ -4,14 +4,16 @@ using FixIt_Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FixIt_Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200315070605_added_isdeleted_field")]
+    partial class added_isdeleted_field
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,15 +89,15 @@ namespace FixIt_Data.Migrations
                     b.Property<string>("Issues")
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<double>("Latitude");
-
                     b.Property<string>("Location");
-
-                    b.Property<double>("Longitude");
 
                     b.Property<string>("Priority");
 
                     b.Property<string>("Status");
+
+                    b.Property<double>("latitude");
+
+                    b.Property<double>("longitude");
 
                     b.HasKey("Id");
 
