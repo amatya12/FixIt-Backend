@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FixIt_Model
@@ -10,10 +11,6 @@ namespace FixIt_Model
 
         [Column(TypeName ="varchar(1000)")]
         public string Issues{ get; set; }
-
-        public int CategoryId { get; set; }
-
-        public virtual Category Category { get; set; }
 
         public string Priority { get; set; }
 
@@ -30,6 +27,10 @@ namespace FixIt_Model
         public string DateCreated { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public ICollection<IssueCategory> IssueCategories { get; set; }
+
+        public ICollection<IssueSubCategory> IssueSubCategories { get; set; }
 
         
 

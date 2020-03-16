@@ -19,5 +19,8 @@ namespace FixIt_Model
 
         public virtual List<SubCategories> SubCategories { get; set; }
 
+        public ICollection<IssueCategory> IssueCategories { get; set; }
+
+
     }
 }

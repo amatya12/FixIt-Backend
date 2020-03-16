@@ -59,12 +59,38 @@ namespace FixIt_Data.Context
 
             modelBuilder.Entity<UserRole>().HasKey(p => new { p.UserId, p.RoleId });
 
+            modelBuilder.Entity<IssueCategory>().HasKey(sc => sc.Id);
+
+            modelBuilder.Entity<IssueCategory>()
+               .HasOne<Issue>(sc => sc.Issue)
+               .WithMany(s => s.IssueCategories)
+               .HasForeignKey(sc => sc.IssueId);
+
+
+            modelBuilder.Entity<IssueCategory>()
+                .HasOne<Category>(sc => sc.Category)
+                .WithMany(s => s.IssueCategories)
+                .HasForeignKey(sc => sc.CategoryId);
+
+
+            modelBuilder.Entity<IssueSubCategory>()
+                .HasOne<Issue>(sc => sc.Issue)
+                .WithMany(s => s.IssueSubCategories)
+                .HasForeignKey(sc => sc.IssueId);
+
+            modelBuilder.Entity<IssueSubCategory>()
+                .HasOne<SubCategories>(sc => sc.SubCategory)
+                .WithMany(s => s.IssueSubCategories)
+                .HasForeignKey(sc => sc.SubCategoryId);
+
         }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Issue> Issues { get; set; }
         public DbSet<SubCategories> SubCategories { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<IssueCategory> IssueCategories { get; set; }
+        public DbSet<IssueSubCategory> IssueSubCategories { get; set; }
         //public DbSet<ApplicationUser> Users { get; set; }
         //public DbSet<ApplicationRole> Roles { get; set; }
         //public DbSet<ApplicationUserRole> UserRoles { get;set }

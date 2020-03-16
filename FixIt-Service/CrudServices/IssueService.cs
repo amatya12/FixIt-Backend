@@ -29,9 +29,9 @@ namespace FixIt_Service.CrudServices
         public bool Exists(Issue model) => GetById(model.Id) != null;
 
 
-        public IEnumerable<Issue> GetAll() => context.Issues.Include(c => c.Category).Where(x => x.IsDeleted == false);
+        public IEnumerable<Issue> GetAll() => context.Issues.Include(c => c.IssueCategories).Where(x => x.IsDeleted == false);
 
-        public Issue GetById(int id) => context.Issues.Include(x => x.Category).FirstOrDefault(i => i.Id == id);
+        public Issue GetById(int id) => context.Issues.Include(x => x.IssueCategories).FirstOrDefault(i => i.Id == id);
 
         public void Save(Issue model)
         {
@@ -54,12 +54,13 @@ namespace FixIt_Service.CrudServices
 
         public IQueryable<Issue> GetAllByFilterQ(string Q)
         {
-           return context.Issues.Include(c => c.Category).Where(x => x.Issues.Contains(Q));
+           return context.Issues.Include(c => c.IssueCategories).Where(x => x.Issues.Contains(Q));
         }
 
         public IQueryable<Issue> GetAllByFilterReferenceId(IQueryable<Issue> source, int referenceId)
         {
-            return source.Where(x => x.CategoryId == referenceId);
+            //return source.Where(x => x. == referenceId);
+            throw new NotImplementedException();
         }
 
     }
