@@ -10,8 +10,6 @@ namespace FixIt_Dto.Dto
 
         public string Issues { get; set; }
 
-        public int CategoryId { get; set; }
-
         public string Priority { get; set; }
 
         public string ImageUrl { get; set; }
@@ -22,6 +20,6 @@ namespace FixIt_Dto.Dto
 
         public double longitude { get; set; }
        
-        public int SubCategoryId { get; set;  }
+        public List<int> SubCategoryId { get; set;  }
     }
 }

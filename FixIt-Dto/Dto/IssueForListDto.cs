@@ -10,7 +10,9 @@ namespace FixIt_Dto.Dto
 
         public string Issues { get; set; }
 
-        public int CategoryId { get; set; }
+        public List<int> CategoryId { get; set; }
+
+        public List<int> SubCategoryId { get; set; }
 
         public string Priority { get; set; }
 
