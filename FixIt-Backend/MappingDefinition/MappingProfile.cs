@@ -4,6 +4,7 @@ using FixIt_Dto.Dto;
 using FixIt_Model;
 using FixIt_Model.Users;
 using System;
+using System.Linq;
 
 namespace FixIt_Backend.MappingDefinition
 {
@@ -24,7 +25,10 @@ namespace FixIt_Backend.MappingDefinition
               {
                   Latitude = issue.Latitude,
                   Longitude = issue.Longitude,
-              }));
+              }))
+              .ForMember(x => x.CategoryId, opt => opt.MapFrom(category => category.IssueCategories.Select(x => x.CategoryId).ToList()))
+              .ForMember(x => x.SubCategoryId, opt => opt.MapFrom(subCategory => subCategory.IssueSubCategories.Select(x => x.SubCategoryId).ToList()));
+
             CreateMap<IssueDto, Issue>().ForMember(x => x.Status, opt => opt.MapFrom(d => "pending"))
                                         .ForMember(x => x.DateCreated, opt => opt.MapFrom(d => DateTime.Now.ToString()));
             CreateMap<Issue, IssueDto>();

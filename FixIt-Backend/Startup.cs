@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Collections.Generic;
 using FixIt_Service;
+using FixIt_Service.HelperFunctions;
 
 namespace FixIt_Backend
 {
@@ -124,6 +125,7 @@ namespace FixIt_Backend
             services.AddScoped<ICustomFilterService<Department>, DepartmentService>();
             services.AddScoped<ICustomFilterService<Issue>, IssueService>();
 
+            services.AddScoped<IssueHelperFunction>();
             services.AddScoped<IAuthenticateService, AuthenticateService>();
 
             services.AddIdentity<User,Role>()

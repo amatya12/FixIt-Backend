@@ -28,9 +28,9 @@ namespace FixIt_Model
 
         public bool IsDeleted { get; set; }
 
-        public ICollection<IssueCategory> IssueCategories { get; set; }
+        public IList<IssueCategory> IssueCategories { get; set; }
 
-        public ICollection<IssueSubCategory> IssueSubCategories { get; set; }
+        public IList<IssueSubCategory> IssueSubCategories { get; set; }
 
         
 
