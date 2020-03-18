@@ -10,6 +10,8 @@ using FixIt_Data.Context;
 using FixIt_Dto.Dto;
 using FixIt_Interface;
 using FixIt_Model;
+using FixIt_Service.CrudServices;
+using FixIt_Service.HelperFunctions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,13 +26,17 @@ namespace FixIt_Backend.Controllers
         private readonly IMapper mapper;
         private readonly ICrudService<Issue> issueService;
         private readonly ICustomFilterService<Issue> filterService;
+        private readonly IssueHelperFunction issueHelperFunction;
+        private readonly ICrudService<SubCategories> subCategoryService;
 
-        public IssueController(DataContext context, IMapper mapper, ICrudService<Issue> issueService, ICustomFilterService<Issue> filterService)
+        public IssueController(DataContext context, IMapper mapper, ICrudService<Issue> issueService, ICustomFilterService<Issue> filterService, IssueHelperFunction issueHelperFunction, ICrudService<SubCategories> subCategoryService)
         {
             this.context = context;
             this.mapper = mapper;
             this.issueService = issueService;
             this.filterService = filterService;
+            this.issueHelperFunction = issueHelperFunction;
+            this.subCategoryService = subCategoryService;
         }
 
         [Route("/api/issue")]
@@ -50,6 +56,7 @@ namespace FixIt_Backend.Controllers
 
             var totalElems = issues.Count();
             issues = issues.Skip(filters.BeginIndex).Take(filters.Limit);
+
             var issueDto = mapper.Map<IEnumerable<IssueForListDto>>(issues);
             HttpContext.Response.Headers.Add("Content-Range", $"issue {filters.BeginIndex} - {issueDto.Count() - 1}/ {totalElems}");
             return Ok(new DtoOutput<IEnumerable<IssueForListDto>>(issueDto));
@@ -69,10 +76,54 @@ namespace FixIt_Backend.Controllers
         [Route("/api/issue")]
         public IActionResult CreateIssue([FromBody]IssueForCreateDto model)
         {
+            var issueEntity = new Issue
+            {
+                Issues = model.Issues,
+                Latitude = model.latitude,
+                Longitude = model.longitude,
+                Location = model.Location,
+                Status = "pending",
+                Priority = model.Priority,
+                ImageUrl = model.ImageUrl,
+                DateCreated = DateTime.Now.ToString(),
+                IsDeleted = false,
+            };
+            var result = context.Issues.Add(issueEntity);
 
-            var issueEntity = mapper.Map<Issue>(model);
-           
-            issueService.Save(issueEntity);
+            /*iterating through the list of subcategory Id we get from frontend.
+             * For eg. potholes,oneway, donotenter
+             * we get subCategoryId=[10,11,2]
+            */
+            foreach (var id in model.SubCategoryId)
+            {
+                //Creating new instance of intermediate table.
+                var issueSubCategory = new IssueSubCategory();
+
+                // Retrieving subCategory object based on subCategory Id.
+                var subCategory = subCategoryService.GetById(id);
+
+                //Mapping the SubCategory to Issue.
+                issueSubCategory.Issue = issueEntity;
+                issueSubCategory.SubCategory = subCategory;
+
+                context.IssueSubCategories.Add(issueSubCategory);
+            }
+
+            //retrieving list of unique Category for the given subCategory Ids.
+            var categories = issueHelperFunction.GetCategoryFromSubCategory(model.SubCategoryId);
+
+            //iterating through unique Category.
+            foreach( var category in categories.GroupBy(x => x.Id).Select(y => y.First()))
+            {
+                //creating a new instance of intermediate table.
+                var issueCategory = new IssueCategory();
+
+                //Mapping Category to Issue.
+                issueCategory.Category = category;
+                issueCategory.Issue = issueEntity;
+
+                context.IssueCategories.Add(issueCategory);
+            }
             try
             {
                 context.SaveChanges();
