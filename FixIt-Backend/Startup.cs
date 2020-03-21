@@ -164,7 +164,7 @@ namespace FixIt_Backend
                        .AllowCredentials()
                        .AllowAnyHeader();
             });
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
