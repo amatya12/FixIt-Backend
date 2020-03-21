@@ -21,6 +21,7 @@ using System.Text;
 using System.Collections.Generic;
 using FixIt_Service;
 using FixIt_Service.HelperFunctions;
+using System.IO;
 
 namespace FixIt_Backend
 {
@@ -29,6 +30,15 @@ namespace FixIt_Backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+        }
+
+        public Startup(IHostingEnvironment configuration)
+        {
+            var builder = new ConfigurationBuilder()
+                               .SetBasePath(Directory.GetCurrentDirectory())
+                               .AddJsonFile("appsettings.json")
+                               .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
