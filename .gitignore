@@ -262,6 +262,7 @@ __pycache__/
 
 log.txt
 appsettings.Development.json
+appsettings.Production.json
 launchSettings.json
 
 build/
