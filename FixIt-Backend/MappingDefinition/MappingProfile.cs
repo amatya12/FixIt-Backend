@@ -43,6 +43,12 @@ namespace FixIt_Backend.MappingDefinition
             CreateMap<DepartmentDto, Department>();
             CreateMap<Department, DepartmentDto>();
 
+            CreateMap<Issue, DamageDto>().ForMember(x => x.Coordinates, opt => opt.MapFrom(o => new CoordsDto
+            {
+                Latitude = o.Latitude,
+                Longitude = o.Longitude
+            }));
+
 
         }
     }
