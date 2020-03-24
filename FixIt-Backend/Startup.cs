@@ -138,6 +138,8 @@ namespace FixIt_Backend
             services.AddScoped<IssueHelperFunction>();
             services.AddScoped<IAuthenticateService, AuthenticateService>();
 
+            services.AddScoped<IDamageService, DamageService>();
+
             services.AddIdentity<User,Role>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
