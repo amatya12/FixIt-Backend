@@ -85,7 +85,7 @@ namespace FixIt_Backend.Controllers
                 Status = "pending",
                 Priority = model.Priority,
                 ImageUrl = model.ImageUrl,
-                DateCreated = DateTime.Now.ToString(),
+                DateCreated = DateTime.Now,
                 IsDeleted = false,
             };
             var result = context.Issues.Add(issueEntity);
