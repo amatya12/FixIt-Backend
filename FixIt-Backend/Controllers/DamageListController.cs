@@ -27,7 +27,8 @@ namespace FixIt_Backend.Controllers
             this.damageService = damageService;
         }
 
-        [HttpGet("/api/damage")]
+        [HttpGet]
+        [Route("/api/damage")]
         public IActionResult GetAllDamages()
         {
            var damages =  damageService.GetDamageList();
@@ -36,7 +37,8 @@ namespace FixIt_Backend.Controllers
 
         }
 
-        [HttpGet("/api/damage/{categoryName}")]
+        [HttpGet]
+        [Route("/api/damage/{categoryName}")]
         public IActionResult GetDamageByCategoryRoad(string categoryName)
         {
             var damages = damageService.GetDamageByCategoryName(categoryName);
