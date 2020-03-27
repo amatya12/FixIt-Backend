@@ -88,8 +88,8 @@ namespace FixIt_Backend
                   Description = "Fix It API.",
                   Contact=new OpenApiContact
                   {
-                      Name = "Prakash",
-                      Email="prakash.timalsina@selu.edu"
+                      Name = "Aakash",
+                      Email="aakash.amatya@selu.edu"
                   },
                   Version = "v1"
                 });
