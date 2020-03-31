@@ -12,6 +12,8 @@ namespace FixIt_Dto.Dto
 
         public string Location { get; set; }
 
+        public string Status { get; set; }
+
         public CoordsDto Coordinates { get; set; }
 
     }
