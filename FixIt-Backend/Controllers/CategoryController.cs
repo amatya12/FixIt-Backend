@@ -49,6 +49,38 @@ namespace FixIt_Backend.Controllers
             return Ok(new DtoOutput<IEnumerable<CategoryDto>>(categoryDto));
         }
 
+        [HttpGet]
+        [Route("/api/categoryfordropdown")]
+        public IActionResult GetCategoriesForDropDown()
+        {
+            var categoriesWithSubCategories = categoryService.GetAll();
+            List<CategoryWithSubCategoryDto> result = new List<CategoryWithSubCategoryDto>();
+           
+            foreach( var value in categoriesWithSubCategories)
+            {
+                List<Children> child = new List<Children>();
+                var output = new CategoryWithSubCategoryDto
+                {
+                    Name = value.CategoryName,
+                    Id = value.Id,
+                };
+                foreach(var subValue in value.SubCategories)
+                {
+                    
+                    var children = new Children
+                    {
+                        Id = subValue.Id,
+                        Name = subValue.SubCategoryName,
+                    };
+                    child.Add(children);
+                }
+                output.Children = child;
+                result.Add(output);
+                
+            }
+            return Ok(new DtoOutput<IEnumerable<CategoryWithSubCategoryDto>>(result));
+        }
+
         [HttpPost]
         [Route("/api/category")]
         public IActionResult CreateCategory([FromBody] CategoryForCreateDto categoryDto)

@@ -14,6 +14,8 @@ namespace FixIt_Dto.Dto
 
         public string Status { get; set; }
 
+        public string DateCreated { get; set; }
+
         public CoordsDto Coordinates { get; set; }
 
     }

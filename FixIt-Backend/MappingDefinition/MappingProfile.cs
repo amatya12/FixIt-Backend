@@ -47,7 +47,8 @@ namespace FixIt_Backend.MappingDefinition
             {
                 Latitude = o.Latitude,
                 Longitude = o.Longitude
-            }));
+            }))
+            .ForMember(x => x.DateCreated, opt => opt.MapFrom(o => o.DateCreated.ToShortDateString().ToString()));
 
 
         }
