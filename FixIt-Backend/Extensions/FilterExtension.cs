@@ -60,6 +60,16 @@ namespace FixIt_Backend.Extensions
         /// The CustomFilters will store filters besides Q and Id (in this case, userIds).
         /// </summary>
         public Dictionary<string, object> CustomFilters = new Dictionary<string, object>();
+
+        //Custom Filter specifically for Issue to filter on the basis of status.
+        public string Status { get; set; }
+
+        //Custom Filter specifically for Priority to filter on the basis of Priority.
+        public string Priority { get; set; }
+
+        public string FromDate { get; set; }
+
+        public string ToDate { get; set; } 
     }
 
     /// <summary>
@@ -98,6 +108,34 @@ namespace FixIt_Backend.Extensions
                     var listOfIds = JsonConvert.DeserializeObject<List<int>>(filterObj["id"].ToString());
                     httpFilters.Id = listOfIds;
                     filterObj.Remove("id");
+                }
+
+                //Only Intended for Issues in admin Panel.
+
+                if(filterObj.ContainsKey("Status"))
+                {
+                    var status = (string)filterObj["Status"];
+                    httpFilters.Status = status;
+                    filterObj.Remove("Status");
+                }
+
+                if(filterObj.ContainsKey("Priority"))
+                {
+                    var priority = (string)filterObj["Priority"];
+                    httpFilters.Priority = priority;
+                    filterObj.Remove("Priority");
+                }
+
+                if(filterObj.ContainsKey("FromDate"))
+                {
+                    httpFilters.FromDate = filterObj["FromDate"].ToString();
+                    filterObj.Remove("FromDate");
+                }
+
+                if (filterObj.ContainsKey("ToDate"))
+                {
+                    httpFilters.ToDate = filterObj["ToDate"].ToString();
+                    filterObj.Remove("ToDate");
                 }
 
                 httpFilters.CustomFilters = filterObj;

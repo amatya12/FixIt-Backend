@@ -50,9 +50,17 @@ namespace FixIt_Backend.Controllers
 
             issues = filters.Id != null ? filterService.GetAllByFilterId(issues, filters.Id) : issues;
 
+            issues = filters.Status != null ? issueHelperFunction.GetAllByCustomFilterStatus(issues, filters.Status) : issues;
+
+            issues = filters.Priority != null ? issueHelperFunction.GetAllByCustomFilterPriority(issues, filters.Priority) : issues;
+
+            issues = (filters.FromDate != null && filters.ToDate != null) ? issueHelperFunction.GetAllByStartAndEndDate(issues, filters.FromDate, filters.ToDate) : issues;
+            issues = (filters.FromDate != null && filters.ToDate == null) ? issueHelperFunction.GetAllByStartAndEndDate(issues, filters.FromDate) : issues;
+            issues = (filters.ToDate != null && filters.ToDate == null) ? issueHelperFunction.GetAllByEndDate(issues, filters.ToDate) : issues;
             issues = filters.CustomFilters.Count > 0 && filters.CustomFilters != null
                        ? filterService.GetAllByFilterReferenceId(issues, filters.ReferenceId)
                        : issues;
+           
 
             var totalElems = issues.Count();
             issues = issues.Skip(filters.BeginIndex).Take(filters.Limit);
@@ -165,7 +173,7 @@ namespace FixIt_Backend.Controllers
                 return Ok(new DtoOutput<int>(0, "Deleted successfully", 0));
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new DtoOutput<int>(0, "Cannot delete the issue", ErrorCode.ISSUE_DELETE_FAILED));
             }
