@@ -148,8 +148,9 @@ namespace FixIt_Backend.Controllers
         public IActionResult EditIssue(int id , [FromBody]IssueForEditDto issue)
         {
             issue.Id = id;
+            
             var issueEntity = mapper.Map<Issue>(issue);
-
+            issueEntity.DateModified = DateTime.Now;
             issueService.Save(issueEntity);
             try
             {
